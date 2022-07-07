@@ -18,7 +18,7 @@ const theme = createTheme({
 } as any);
 
 function App() {
-  const [open, setOpen] = useRecoilState(uploadDialogState);
+  const [, setOpen] = useRecoilState(uploadDialogState);
 
   return (
     <ThemeProvider theme={theme}>
@@ -26,7 +26,7 @@ function App() {
         <Upload />
         <header className="App-header">
           <a href="/">
-            <img src="logo.svg" />
+            <img src="logo.svg" alt="logo" />
           </a>
           <Button
             onClick={() => setOpen(true)}
