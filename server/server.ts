@@ -75,12 +75,10 @@ export const start = async (
     reply.send(meta);
   });
 
-  if (opts.NODE_ENV !== "development") {
-    fastify.register(require("@fastify/static"), {
-      root: path.join(__dirname, "../../client/build"),
-      prefix: "/", // optional: default '/'
-    });
-  }
+  fastify.register(require("@fastify/static"), {
+    root: path.join(__dirname, "../../client/build"),
+    prefix: "/", // optional: default '/'
+  });
 
   fastify.listen(port, "0.0.0.0", (err, address) => {
     if (err) {
