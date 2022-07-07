@@ -8,7 +8,7 @@ RUN yarn install --frozen-lockfile
 
 # Bundle app source
 
-COPY ./build ./build
+COPY ./build/server ./build/server
 COPY ./client/build ./client/build
 
 EXPOSE 3000
