@@ -10,7 +10,7 @@ RUN yarn install --frozen-lockfile
 # Bundle app source
 RUN mkdir ./build
 COPY ./build ./build
-RUN mkdir -p client/build
+RUN mkdir -p ./client/build
 COPY ./client/build ./client/build
 
 EXPOSE 3000
