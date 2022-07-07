@@ -19,7 +19,8 @@ export default function FormDialog() {
     setOpen(false);
   };
 
-  const host = process.env.PRODUCTION ? "" : "http://localhost:3005";
+  const host =
+    process.env.NODE_ENV === "development" ? "http://localhost:3005" : "";
   const handlePublish = (cb: any) => {
     var formData = new FormData();
     var manifest: any = document.querySelector("#manifest");

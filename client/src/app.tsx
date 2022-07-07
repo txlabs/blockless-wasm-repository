@@ -1,4 +1,4 @@
-import "./App.css";
+import "./app.css";
 import * as React from "react";
 import Button from "@mui/material/Button";
 import { createTheme } from "@mui/material/styles";

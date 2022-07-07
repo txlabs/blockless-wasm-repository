@@ -31,7 +31,8 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-const host = process.env.PRODUCTION ? "" : "http://localhost:3005";
+const host =
+  process.env.NODE_ENV === "development" ? "http://localhost:3005" : "";
 export default function CustomizedTables() {
   const [functionList, setFunctionlist] = useRecoilState(moduleListState);
 
