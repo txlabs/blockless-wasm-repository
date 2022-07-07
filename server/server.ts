@@ -80,6 +80,21 @@ export const start = async (
     reply.send(meta);
   });
 
+  fastify.setNotFoundHandler((req: any, res: any) => {
+    // API 404
+    if (req.raw.url && req.raw.url.startsWith("/api")) {
+      return res.status(404).send({
+        success: false,
+        error: {
+          kind: "user_input",
+          message: "Not Found",
+        },
+      });
+    }
+
+    res.status(200).sendFile("index.html");
+  });
+
   fastify.listen(port, "0.0.0.0", (err, address) => {
     if (err) {
       fastify.log.error(err);
