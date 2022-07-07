@@ -75,7 +75,7 @@ export const start = async (
     reply.send(meta);
   });
 
-  if (process.env.PRODUCTION) {
+  if (process.env.NODE_ENV !== "development") {
     fastify.register(require("@fastify/static"), {
       root: path.join(__dirname, "../../client/build"),
       prefix: "/", // optional: default '/'
