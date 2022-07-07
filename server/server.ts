@@ -75,7 +75,7 @@ export const start = async (
     reply.send(meta);
   });
 
-  if (process.env.NODE_ENV !== "development") {
+  if (opts.NODE_ENV !== "development") {
     fastify.register(require("@fastify/static"), {
       root: path.join(__dirname, "../../client/build"),
       prefix: "/", // optional: default '/'
@@ -87,6 +87,6 @@ export const start = async (
       fastify.log.error(err);
       process.exit(1);
     }
-    fastify.log.info(`server listening on ${address}`);
+    fastify.log.info(`server listening on ${address} in ${opts.NODE_ENV} mode`);
   });
 };

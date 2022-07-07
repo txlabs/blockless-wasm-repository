@@ -20,4 +20,8 @@ function makeStorageClient() {
 }
 
 const storageClient = makeStorageClient();
-serverStart(storageClient, process.env, process.env.PRODUCTION ? 3000 : 3005);
+serverStart(
+  storageClient,
+  process.env,
+  process.env.NODE_ENV === "development" ? 3005 : 3000
+);
