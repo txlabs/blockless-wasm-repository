@@ -31,6 +31,16 @@ export const start = async (
 ) => {
   await mongoose.connect(opts.MONGO_CN_STRING);
 
+  fastify.register(require("@fastify/static"), {
+    root: path.join(__dirname, "../../client/build"),
+    prefix: "/", // optional: default '/'
+  });
+
+  // this will work with fastify-static and send ./static/index.html
+  fastify.setNotFoundHandler((req: any, res: any) => {
+    res.sendFile("../../client/build/index.html");
+  });
+
   fastify.get("/api/list", async (request, reply) => {
     const modules = await Module.find();
     reply.send(JSON.stringify(modules));
@@ -73,16 +83,6 @@ export const start = async (
 
     // send the user back the file info whenever
     reply.send(meta);
-  });
-
-  fastify.register(require("@fastify/static"), {
-    root: path.join(__dirname, "../../client/build"),
-    prefix: "/", // optional: default '/'
-  });
-
-  // this will work with fastify-static and send ./static/index.html
-  fastify.setNotFoundHandler((req: any, res: any) => {
-    res.sendFile("../../client/build/index.html");
   });
 
   fastify.listen(port, "0.0.0.0", (err, address) => {
