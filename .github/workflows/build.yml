@@ -1,10 +1,7 @@
 name: build and publish
+
 on:
   workflow_dispatch:
-
-env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   docker:
@@ -25,8 +22,8 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
           context: .
           push: true
           tags: blockless/wasi-repo:latest
+          secrets: |
+            GIT_AUTH_TOKEN=${{ secrets.GH_PAT }}
