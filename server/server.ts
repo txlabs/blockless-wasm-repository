@@ -82,7 +82,7 @@ export const start = async (
     });
   }
 
-  fastify.listen(port, (err, address) => {
+  fastify.listen(port, "0.0.0.0", (err, address) => {
     if (err) {
       fastify.log.error(err);
       process.exit(1);
