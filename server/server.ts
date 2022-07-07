@@ -80,6 +80,11 @@ export const start = async (
     prefix: "/", // optional: default '/'
   });
 
+  // this will work with fastify-static and send ./static/index.html
+  fastify.setNotFoundHandler((req: any, res: any) => {
+    res.sendFile("../../client/build/index.html");
+  });
+
   fastify.listen(port, "0.0.0.0", (err, address) => {
     if (err) {
       fastify.log.error(err);
