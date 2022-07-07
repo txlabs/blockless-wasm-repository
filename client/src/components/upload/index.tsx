@@ -13,7 +13,7 @@ import UploadButton from "../interactivebutton";
 
 export default function FormDialog() {
   const [open, setOpen] = useRecoilState(uploadDialogState);
-  const [functionList, setFunctionlist] = useRecoilState(moduleListState);
+  const [, setFunctionlist] = useRecoilState(moduleListState);
 
   const handleClose = () => {
     setOpen(false);

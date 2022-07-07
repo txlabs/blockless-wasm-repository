@@ -8,13 +8,13 @@ import { uploadDialogState } from "../../recoil/atoms";
 
 export default function CircularIntegration(props: any) {
   const [loading, setLoading] = React.useState(false);
-  const [success, setSuccess] = React.useState(false);
-  const [open, setOpen] = useRecoilState(uploadDialogState);
+  const [, setSuccess] = React.useState(false);
+  const [, setOpen] = useRecoilState(uploadDialogState);
   const timer = React.useRef<number>();
 
   React.useEffect(() => {
     return () => {
-      clearTimeout(timer.current);
+      clearTimeout((timer as any).current);
     };
   }, []);
 

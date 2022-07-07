@@ -36,7 +36,7 @@ export default function CustomizedTables() {
   const [functionList, setFunctionlist] = useRecoilState(moduleListState);
 
   React.useEffect(() => {
-    if (functionList.length == 0) {
+    if (functionList.length === 0) {
       axios.get(`${host}/api/list`).then((res) => {
         setFunctionlist(res.data);
       });
