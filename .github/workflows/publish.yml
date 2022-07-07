@@ -17,6 +17,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
+          no-cache: true
           push: true
           tags: blockless/wasi-repo:${{ steps.get_version.outputs.VERSION }}
           secrets: |
