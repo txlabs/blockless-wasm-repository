@@ -13,7 +13,7 @@ jobs:
       - run: |
           npm i -g yarn
           yarn && yarn build
-      - run: ls -a
+      - run: ls -a && ls client
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
       - name: Set up Docker Buildx
