@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "start": "env PRODUCTION=true yarn build; env PRODUCTION=true node build/index.js",
+    "build": "yarn workspace client build; yarn workspace server build",
+    "dev": "concurrently \"yarn workspace client start\" \"yarn workspace server start\""
+  },
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "dependencies": {
+    "concurrently": "^7.2.2"
+  }
+}

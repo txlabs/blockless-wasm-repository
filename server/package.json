@@ -1,0 +1,26 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Derek Anderson <derek@akash.network>",
+  "license": "APACHE-2.0",
+  "scripts": {
+    "build": "tsc",
+    "start": "ts-node index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@fastify/cors": "^8.0.0",
+    "@fastify/static": "^6.4.0",
+    "dotenv": "^16.0.1",
+    "fastify": "^4.2.0",
+    "fastify-file-upload": "^4.0.0",
+    "mongoose": "^6.4.3",
+    "ts-node": "^10.8.2",
+    "typescript": "^4.7.4",
+    "web3.storage": "^4.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.3"
+  }
+}
