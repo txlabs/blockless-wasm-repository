@@ -11,7 +11,7 @@ RUN yarn install --frozen-lockfile
 RUN mkdir ./build
 COPY ./build ./build
 RUN mkdir -p ./client/build
-COPY ./client/build ./client/build
+COPY ./client/build .
 
 EXPOSE 3000
 CMD [ "yarn", "start" ]
