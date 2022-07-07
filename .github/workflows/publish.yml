@@ -20,4 +20,4 @@ jobs:
           push: true
           tags: blockless/wasi-repo:${{ steps.get_version.outputs.VERSION }}
           secrets: |
-            GIT_AUTH_TOKEN=${{ secrets.MYTOKEN }}
+            GIT_AUTH_TOKEN=${{ secrets.GITHUB_TOKEN }}
