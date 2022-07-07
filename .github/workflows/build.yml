@@ -21,7 +21,6 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v3
         with:
-          registry: ${{ env.REGISTRY }}
           context: .
           push: true
           tags: blockless/wasi-repo:latest
