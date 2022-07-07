@@ -36,11 +36,6 @@ export const start = async (
     prefix: "/", // optional: default '/'
   });
 
-  // this will work with fastify-static and send ./static/index.html
-  fastify.setNotFoundHandler((req: any, res: any) => {
-    res.sendFile("../../client/build/index.html");
-  });
-
   fastify.get("/api/list", async (request, reply) => {
     const modules = await Module.find();
     reply.send(JSON.stringify(modules));
