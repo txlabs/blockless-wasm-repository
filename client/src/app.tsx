@@ -37,7 +37,7 @@ function App() {
           </Button>
         </header>
         <Typography sx={{ p: 5 }}>
-          A published list of public WASM modules available on Filecoin
+          A published list of public WASI modules available on Filecoin
         </Typography>
         <DataTable />
       </div>
