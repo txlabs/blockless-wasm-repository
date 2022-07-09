@@ -46,11 +46,11 @@ export default function FormDialog() {
   return (
     <div>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Publish WASM Module</DialogTitle>
+        <DialogTitle>Publish WASI Module</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Quickly submit a new WASM module to an IPFS store. Max size allowed
-            is 50mb.
+            Quickly submit a new WASI module to an IPFS store. Max size
+            currently allowed is 10mb.
           </DialogContentText>
           <TextField
             sx={{ mt: 2 }}
