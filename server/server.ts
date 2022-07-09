@@ -32,8 +32,8 @@ export const start = async (
   await mongoose.connect(opts.MONGO_CN_STRING);
 
   fastify.register(require("@fastify/static"), {
-    root: path.join(__dirname, "../../client/build"),
-    prefix: "/", // optional: default '/'
+    root: path.join(__dirname, "../client/build"),
+    prefix: "/",
   });
 
   fastify.get("/api/list", async (request, reply) => {
@@ -80,10 +80,10 @@ export const start = async (
     reply.send(meta);
   });
 
-  fastify.setNotFoundHandler((req: any, res: any) => {
+  fastify.setNotFoundHandler((request: any, reply: any) => {
     // API 404
-    if (req.raw.url && req.raw.url.startsWith("/api")) {
-      return res.status(404).send({
+    if (request.raw.url && request.raw.url.startsWith("/api")) {
+      return reply.status(404).send({
         success: false,
         error: {
           kind: "user_input",
@@ -92,7 +92,11 @@ export const start = async (
       });
     }
 
-    res.status(200).sendFile("index.html");
+    const staticHTMLPath = path.resolve(
+      __dirname,
+      "../client/build/index.html"
+    );
+    reply.status(200).sendFile(staticHTMLPath);
   });
 
   fastify.listen(port, "0.0.0.0", (err, address) => {
