@@ -4,6 +4,33 @@ import mongoose from "mongoose";
 import path from "path";
 import LRU from "lru-cache";
 import fileUpload from "fastify-file-upload";
+import metricsPlugin from "fastify-metrics";
+import client from "prom-client";
+
+const WASI_UPLOAD_COUNTER = new client.Counter({
+  name: "wasi_package_uploads_total",
+  help: "the number of total package uploads, not unique",
+});
+
+const WASI_UPLOAD_UNIQUE_COUNTER = new client.Counter({
+  name: "wasi_package_uploads_unique",
+  help: "the number of total package uploads, unique",
+});
+
+const REPOSITORY_SYNC_REQUESTS = new client.Counter({
+  name: "repository_sync_requests_total",
+  help: "the number of total requests from networking layer to sync with the repository",
+});
+
+const REPOSITORY_FILE_SERVE_REQUESTS = new client.Counter({
+  name: "repository_file_serve_requests_total",
+  help: "the number of total requests from networking layer to sync with the repository",
+});
+
+const REPOSITORY_FILE_SERVE_CACHED_REQUESTS = new client.Counter({
+  name: "repository_file_serve_cached_requests_total",
+  help: "the number of total CACHED requests from networking layer to sync with the repository",
+});
 
 const options = {
   sizeCalculation: (value: any, key: any) => {
@@ -30,6 +57,8 @@ fastify.register(fileUpload, {
 fastify.register(require("@fastify/cors"), {
   origin: !process.env.PRODUCTION,
 });
+
+fastify.register(metricsPlugin, { endpoint: "/metrics" });
 
 const ModuleSchema = new mongoose.Schema({
   name: String,
@@ -88,15 +117,22 @@ export const start = async (
 
     // if this module doesn't exist in mongodb then save it
     if (!module) {
+      WASI_UPLOAD_UNIQUE_COUNTER.inc();
       module = new Module(meta);
       await module.save();
     }
 
+    WASI_UPLOAD_COUNTER.inc(); // Increment by 1
     // send the user back the file info whenever
     reply.send(meta);
   });
 
+  // build a module directory listing the networking layer currently
+  // uses this format
+  // @todo: move to a proper exchange format
   fastify.get("/api/sync", async (request, reply) => {
+    REPOSITORY_SYNC_REQUESTS.inc();
+
     const modules = await Module.find();
 
     const list = modules.map((module: any) => {
@@ -115,7 +151,10 @@ export const start = async (
     reply.header("Content-Type", "text/html").status(200).send(html);
   });
 
+  // retrieves and caches a file from the IPFS network
   fastify.get("/api/sync/:cid/:file", async (request, reply) => {
+    REPOSITORY_FILE_SERVE_REQUESTS.inc();
+
     // fetch the file from the storage client
     const { cid }: any = request.params;
     const cacheid = request.url;
@@ -123,6 +162,7 @@ export const start = async (
     const filePart = request.url.split("/").pop();
 
     if (cached) {
+      REPOSITORY_FILE_SERVE_CACHED_REQUESTS.inc();
       fastify.log.info(`Cache hit for ${cid}`);
       reply
         .header("Content-Type", cached.type)
@@ -182,6 +222,7 @@ export const start = async (
       });
     }
 
+    // send the react spa and it can handle 404s in it's router
     const staticHTMLPath = path.resolve(
       __dirname,
       "../client/build/index.html"
