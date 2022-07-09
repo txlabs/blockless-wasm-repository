@@ -10,7 +10,7 @@ RUN yarn install
 
 # Bundle app source
 
-COPY ./build/server ./build/server
+COPY ./build/ ./build/
 COPY ./client/build ./client/build
 
 CMD [ "yarn", "start" ]

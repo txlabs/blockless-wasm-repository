@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "env NODE_ENV=production node build/server/index.js",
+    "start": "env NODE_ENV=production node build/index.js",
     "build": "yarn workspace client build; yarn workspace server build",
     "dev": "env NODE_ENV=development concurrently \"yarn workspace client start\" \"yarn workspace server start\""
   },
