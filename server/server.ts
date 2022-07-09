@@ -23,7 +23,9 @@ const fastify = Fastify({
   logger: true,
 });
 
-fastify.register(fileUpload);
+fastify.register(fileUpload, {
+  limits: { fileSize: 50 * 1024 * 1024 },
+});
 
 fastify.register(require("@fastify/cors"), {
   origin: !process.env.PRODUCTION,

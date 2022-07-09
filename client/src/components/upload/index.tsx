@@ -49,7 +49,8 @@ export default function FormDialog() {
         <DialogTitle>Publish WASM Module</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Quickly submit a new WASM module to an IPFS store.
+            Quickly submit a new WASM module to an IPFS store. Max size allowed
+            is 50mb.
           </DialogContentText>
           <TextField
             sx={{ mt: 2 }}
