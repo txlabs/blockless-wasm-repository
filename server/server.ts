@@ -6,7 +6,7 @@ import LRU from "lru-cache";
 import fileUpload from "fastify-file-upload";
 import metricsPlugin from "fastify-metrics";
 import client from "prom-client";
-
+import { Logger } from "./logger";
 const WASI_UPLOAD_COUNTER = new client.Counter({
   name: "wasi_package_uploads_total",
   help: "the number of total package uploads, not unique",
@@ -47,7 +47,7 @@ const options = {
 const cache = new LRU(options);
 
 const fastify = Fastify({
-  logger: true,
+  logger: Logger() as any,
 });
 
 fastify.register(fileUpload, {
