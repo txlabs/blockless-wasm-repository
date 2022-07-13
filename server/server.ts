@@ -81,6 +81,10 @@ export const start = async (
     prefix: "/",
   });
 
+  fastify.get("/health", async (request, reply) => {
+    reply.send({ status: "ok" });
+  });
+
   fastify.get("/api/list", async (request, reply) => {
     const modules = await Module.find();
     reply.send(JSON.stringify(modules, null, 2));
